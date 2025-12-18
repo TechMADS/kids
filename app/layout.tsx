@@ -25,25 +25,58 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-        <header className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <img src="/logo.svg" alt="Logo" width={44} height={44} style={{ borderRadius: 8 }} />
-            <div>
-              <div className="header-title">Cycle Store Reviews</div>
-              <div style={{ fontSize: 12, color: 'var(--muted)' }}>Rewards for honest feedback</div>
+        {/* Header */}
+        <header className="sticky top-0 z-50 bg-card border-b border-border shadow-sm">
+          <div className="container mx-auto px-4 py-3">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              {/* Logo and Title */}
+              <div className="flex items-center gap-3 min-w-0">
+                <img
+                  src="/logo.svg"
+                  alt="Cycle Store Logo"
+                  className="w-11 h-11 rounded-lg flex-shrink-0"
+                />
+                <div className="min-w-0">
+                  <h1 className="text-lg sm:text-xl font-bold truncate">
+                    Cycle Store Reviews
+                  </h1>
+                  <p className="text-xs text-muted mt-0.5">
+                    Rewards for honest feedback
+                  </p>
+                </div>
+              </div>
+
+              {/* Navigation */}
+              <nav className="flex flex-wrap items-center justify-center sm:justify-end gap-2 w-full sm:w-auto">
+                <a
+                  href="/review"
+                  className="px-3 py-2 text-sm font-bold text-muted hover:text-foreground hover:bg-bg-secondary rounded-lg transition-colors"
+                >
+                  Leave a review
+                </a>
+                <a
+                  href="/admin"
+                  className="badge px-3 py-1.5 text-sm font-bold no-underline"
+                >
+                  Admin
+                </a>
+                <a
+                  href="/r/scan"
+                  className="btn-primary-gradient text-white px-4 py-2.5 rounded-lg font-bold text-sm sm:text-base whitespace-nowrap hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg"
+                >
+                  Scan & Review
+                </a>
+              </nav>
             </div>
           </div>
-
-          <nav style={{ display: 'flex', alignItems: 'center' }}>
-            <a href="/review" style={{ marginRight: 12 }}>Leave a review</a>
-            <a href="/admin" className="badge" style={{ marginRight: 12 }}>Admin</a>
-            <a href="/r/scan" className="btn btn-primary">Scan & Review</a>
-          </nav>
         </header>
 
-        <main className="container" style={{ paddingTop: 24 }}>{children}</main>
+        {/* Main Content */}
+        <main className="container mx-auto px-4 py-6 sm:py-8">
+          {children}
+        </main>
       </body>
     </html>
   );
