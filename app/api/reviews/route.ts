@@ -35,9 +35,9 @@ export async function POST(req: Request) {
   if (!phone) {
     return NextResponse.json({ error: 'phone is required' }, { status: 400 })
   }
-  if (!reviewText) {
-    return NextResponse.json({ error: 'reviewText is required' }, { status: 400 })
-  }
+  // if (!reviewText) {
+  //   return NextResponse.json({ error: 'reviewText is required' }, { status: 400 })
+  // }
 
   const phoneTrim = String(phone).trim()
   const phoneHash = crypto.createHash('sha256').update(phoneTrim).digest('hex')
