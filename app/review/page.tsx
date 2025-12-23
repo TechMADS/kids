@@ -268,7 +268,7 @@ export default function ReviewPage() {
                       dob: '', 
                       reviewText: '',
                       rating: '5', 
-                      googleReviewUrl: '', 
+                      googleReviewUrl: '',
                       purchaseId: '' 
                     })}
                     className="px-6 py-3 rounded-lg font-bold border border-border bg-transparent hover:bg-surface min-h-[44px] transition-colors"

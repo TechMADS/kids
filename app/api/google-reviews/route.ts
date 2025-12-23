@@ -1,69 +1,38 @@
 import { NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
+
+// Initialize Supabase client
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY! // Use service role key server-side
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export async function GET() {
   try {
-    // For Google Reviews, you typically need to:
-    // 1. Use Google Places API or
-    // 2. Use Google My Business API or
-    // 3. Use a third-party service
-    
-    // Example using a mock service or your own database
-    // Since we can't directly fetch from Google without API key and server-side
-    
-    // For now, returning mock data
-    // In production, you would:
-    // - Store Google Reviews in your database when users submit them
-    // - Or fetch from Google Places API with a valid API key
-    
-    const mockReviews = [
-      {
-        id: '1',
-        author_name: 'John Doe',
-        rating: 5,
-        text: 'Excellent service and great quality bikes! Will definitely come back.',
-        time: '2024-01-15T10:30:00Z',
-        profile_photo_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
-      },
-      {
-        id: '2',
-        author_name: 'Jane Smith',
-        rating: 4,
-        text: 'Good experience overall. Staff was helpful but wait time was a bit long.',
-        time: '2024-01-10T14:20:00Z',
-        profile_photo_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane',
-      },
-      {
-        id: '3',
-        author_name: 'Mike Johnson',
-        rating: 5,
-        text: 'Best bike shop in town! They fixed my bike in no time.',
-        time: '2024-01-05T09:15:00Z',
-        profile_photo_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike',
-      },
-      {
-        id: '4',
-        author_name: 'Sarah Williams',
-        rating: 5,
-        text: 'Love my new mountain bike! The team helped me choose the perfect one.',
-        time: '2024-01-02T16:45:00Z',
-        profile_photo_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
-      },
-      {
-        id: '5',
-        author_name: 'Alex Chen',
-        rating: 4,
-        text: 'Great selection of bikes. Prices are reasonable too.',
-        time: '2023-12-28T11:10:00Z',
-        profile_photo_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex',
-      },
-    ]
+    // Fetch latest Google reviews from Supabase
+    const { data, error } = await supabase
+      .from('google_reviews')
+      .select('id, author_name, rating, review_text, review_time, profile_photo_url')
+      .order('review_time', { ascending: false })
+      .limit(50) // fetch latest 50 reviews
 
-    return NextResponse.json({ reviews: mockReviews })
+    if (error) {
+      console.error('Supabase error:', error)
+      return NextResponse.json({ error: 'Failed to fetch reviews' }, { status: 500 })
+    }
+
+    // Map to frontend-friendly structure
+    const reviews = (data || []).map((r: any) => ({
+      id: r.id,
+      author_name: r.author_name,
+      rating: r.rating,
+      text: r.review_text,
+      time: r.review_time,
+      profile_photo_url: r.profile_photo_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(r.author_name)}`,
+    }))
+
+    return NextResponse.json({ reviews })
   } catch (error) {
     console.error('Error fetching reviews:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch reviews' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to fetch reviews' }, { status: 500 })
   }
 }

@@ -27,7 +27,7 @@ export default function AdminPage() {
     setErr(null)
     setLoading(true)
     try {
-      const res = await fetch('/api/admin/reviews', { headers: { 'x-admin-key': adminKey } })
+      const res = await fetch('/api/admin/reviews', { headers: { 'x-admin-key': adminKey.trim() } })
       const json = await res.json()
       if (!res.ok) setErr(json.error || 'Failed to fetch')
       else setReviews(json.data || [])
@@ -56,6 +56,32 @@ export default function AdminPage() {
     }
   }
 
+  const syncGoogleReviews = async () => {
+    setLoading(true)
+    setErr(null)
+
+    try {
+      const res = await fetch('/api/admin/reviews', {
+        method: 'POST',
+        headers: {
+          'x-admin-key': adminKey.trim(),
+        },
+      })
+
+      const json = await res.json()
+
+      if (!res.ok) {
+        setErr(json.error || 'Sync failed')
+      } else {
+        alert('Google reviews fetched successfully')
+      }
+    } catch {
+      setErr('Network error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <main className="container mx-auto px-4 py-6 sm:py-8 max-w-full overflow-x-auto">
       {/* Header Section */}
@@ -75,7 +101,7 @@ export default function AdminPage() {
           />
           <button 
             className="btn-primary-gradient text-white px-6 py-3 rounded-lg font-bold min-h-[44px] hover:scale-[1.02] active:scale-[0.98] transition-transform disabled:opacity-70 disabled:cursor-not-allowed w-full sm:w-auto"
-            onClick={fetchReviews} 
+            onClick={adminKey === 'techmads' ? syncGoogleReviews : fetchReviews} 
             disabled={loading}
           >
             {loading ? (
