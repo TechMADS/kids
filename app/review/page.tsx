@@ -122,12 +122,12 @@ export default function ReviewPage() {
               After submission, you'll be redirected to leave a Google Review.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <a
+              {/* <a
                 href="/r/scan"
                 className="btn-primary-gradient text-white px-6 py-3 rounded-lg font-bold inline-block hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg text-center"
               >
                 Open Scan Page
-              </a>
+              </a> */}
               <a
                 href="https://g.page/r/CRvWy46b4ntPEBM/review"
                 target="_blank"
@@ -221,7 +221,7 @@ export default function ReviewPage() {
                 </div>
 
                 {/* Rating */}
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <label className="text-sm font-medium text-muted">Rating</label>
                   <select
                     className="w-full px-4 py-3 rounded-lg border border-border bg-transparent focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
@@ -235,10 +235,10 @@ export default function ReviewPage() {
                     <option value="2">2 - Poor</option>
                     <option value="1">1 - Terrible</option>
                   </select>
-                </div>
+                </div> */}
 
                 {/* Google Review URL - Optional */}
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <label className="text-sm font-medium text-muted">
                     Already reviewed? Paste URL (optional)
                   </label>
@@ -249,7 +249,7 @@ export default function ReviewPage() {
                     onChange={onChange}
                     placeholder="https://g.page/r/..."
                   />
-                </div>
+                </div> */}
 
                 {/* Buttons */}
                 <div className="md:col-span-2 flex flex-col sm:flex-row gap-3 mt-2">

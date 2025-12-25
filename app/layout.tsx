@@ -28,7 +28,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         {/* Header */}
-        <header className="sticky top-0 z-50 bg-card border-b border-border shadow-sm">
+        <header className="sticky bg-white top-0 z-50 bg-card border-b border-border shadow-sm">
           <div className="container mx-auto px-4 py-3">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               {/* Logo and Title */}
@@ -61,12 +61,6 @@ export default function RootLayout({
                   className="badge px-3 py-1.5 text-sm font-bold no-underline"
                 >
                   Admin
-                </a>
-                <a
-                  href="/r/scan"
-                  className="btn-primary-gradient text-white px-4 py-2.5 rounded-lg font-bold text-sm sm:text-base whitespace-nowrap hover:scale-[1.02] active:scale-[0.98] transition-transform shadow-lg"
-                >
-                  Scan & Review
                 </a>
               </nav>
             </div>
